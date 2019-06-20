@@ -1,4 +1,4 @@
-package plurkAction
+package pkg
 
 import (
 	"encoding/json"
