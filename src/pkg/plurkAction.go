@@ -37,23 +37,37 @@ func GetPlurkOauth() (*oauth.Credentials, error) {
 	return accessToken, nil
 }
 
-func GetProfile (accessToken *oauth.Credentials){
+func GetProfile(accessToken *oauth.Credentials) map[string]string {
 	result, err := plurgo.CallAPI(accessToken, "/APP/Profile/getOwnProfile", map[string]string{})
 	if err != nil {
 		log.Fatalf("failed: %v", err)
 	}
-	fmt.Println(string(result))
+	var resultData = map[string]string{}
+
+	if err := json.Unmarshal(result, resultData); err != nil {
+		log.Fatalf("failed: %v", err)
+	}
+
+	log.Print(resultData)
+	return resultData
 }
 
-func AddAllAsFriend (accessToken *oauth.Credentials){
+func AddAllAsFriend(accessToken *oauth.Credentials) map[string]string {
+	var resultData = map[string]string{}
 	result, err := plurgo.CallAPI(accessToken, "/APP/Alerts/addAllAsFriends", map[string]string{})
 	if err != nil {
 		log.Fatalf("failed: %v", err)
 	}
-	fmt.Println(string(result))
+
+	if err := json.Unmarshal(result, resultData); err != nil {
+		log.Fatalf("failed: %v", err)
+	}
+
+	log.Print(resultData)
+	return resultData
 }
 
-func SendPlurk (accessToken *oauth.Credentials, content string, qualifier string) {
+func SendPlurk(accessToken *oauth.Credentials, content string, qualifier string) {
 	var data = map[string]string{}
 	data["content"] = content
 	data["qualifier"] = qualifier
