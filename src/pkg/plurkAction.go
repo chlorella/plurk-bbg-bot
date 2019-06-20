@@ -59,7 +59,7 @@ func AddAllAsFriend(accessToken *oauth.Credentials) map[string]string {
 		log.Fatalf("failed: %v", err)
 	}
 
-	if err := json.Unmarshal(result, resultData); err != nil {
+	if err := json.Unmarshal(result, &resultData); err != nil {
 		log.Fatalf("failed: %v", err)
 	}
 
