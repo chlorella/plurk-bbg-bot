@@ -1,39 +1,16 @@
-package main
+package pkg
 
 import (
-	"encoding/json"
 	"flag"
 	"fmt"
 	"github.com/clsung/plurgo/plurkgo"
 	"github.com/garyburd/go-oauth/oauth"
-	"io/ioutil"
 	"log"
 )
 
 var credPath = flag.String("config", "config.json", "Path to configuration file containing the application's credentials.")
-var lang = "en"
+var lang = "ja"
 
-func main() {
-	flag.Parse()
-	plurkOAuth, err := plurgo.ReadCredentials(*credPath)
-	if err != nil {
-		log.Fatalf("Error reading credential, %v", err)
-	}
-	accessToken, authorized, err := plurgo.GetAccessToken(plurkOAuth)
-
-	if authorized {
-		bytes, err := json.MarshalIndent(plurkOAuth, "", "  ")
-		if err != nil {
-			log.Fatalf("failed to store credential: %v", err)
-		}
-		err = ioutil.WriteFile(*credPath, bytes, 0700)
-		if err != nil {
-			log.Fatalf("failed to write credential: %v", err)
-		}
-	}
-
-	sendPlurk(accessToken,"(dice)(dice)","plays")
-}
 
 func getProfile (accessToken *oauth.Credentials){
 	result, err := plurgo.CallAPI(accessToken, "/APP/Profile/getOwnProfile", map[string]string{})
@@ -62,4 +39,3 @@ func sendPlurk (accessToken *oauth.Credentials, content string, qualifier string
 	}
 	fmt.Println(string(result))
 }
-
