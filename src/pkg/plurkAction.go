@@ -13,7 +13,7 @@ import (
 var credPath = flag.String("config", "config.json", "Path to configuration file containing the application's credentials.")
 var lang = "ja"
 
-func getPlurkOauth() (*oauth.Credentials, error) {
+func GetPlurkOauth() (*oauth.Credentials, error) {
 	flag.Parse()
 	plurkOAuth, err := plurgo.ReadCredentials(*credPath)
 	if err != nil {
@@ -37,7 +37,7 @@ func getPlurkOauth() (*oauth.Credentials, error) {
 	return accessToken, nil
 }
 
-func getProfile (accessToken *oauth.Credentials){
+func GetProfile (accessToken *oauth.Credentials){
 	result, err := plurgo.CallAPI(accessToken, "/APP/Profile/getOwnProfile", map[string]string{})
 	if err != nil {
 		log.Fatalf("failed: %v", err)
@@ -45,7 +45,7 @@ func getProfile (accessToken *oauth.Credentials){
 	fmt.Println(string(result))
 }
 
-func addAllAsFriend (accessToken *oauth.Credentials){
+func AddAllAsFriend (accessToken *oauth.Credentials){
 	result, err := plurgo.CallAPI(accessToken, "/APP/Alerts/addAllAsFriends", map[string]string{})
 	if err != nil {
 		log.Fatalf("failed: %v", err)
@@ -53,7 +53,7 @@ func addAllAsFriend (accessToken *oauth.Credentials){
 	fmt.Println(string(result))
 }
 
-func sendPlurk (accessToken *oauth.Credentials, content string, qualifier string) {
+func SendPlurk (accessToken *oauth.Credentials, content string, qualifier string) {
 	var data = map[string]string{}
 	data["content"] = content
 	data["qualifier"] = qualifier

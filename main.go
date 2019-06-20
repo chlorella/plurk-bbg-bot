@@ -1,15 +1,10 @@
 package main
 
-import (
-	"flag"
-
-)
-
-var credPath = flag.String("config", "config.json", "Path to configuration file containing the application's credentials.")
-var lang = "en"
+import plurkAction "github.com/chlorella/plurk-bbg-bot/src/pkg"
 
 func main() {
-	flag.Parse()
+	accessToken, _ := plurkAction.GetPlurkOauth()
 
+	plurkAction.GetPro()
 }
 
