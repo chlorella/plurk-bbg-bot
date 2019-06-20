@@ -44,7 +44,7 @@ func GetProfile(accessToken *oauth.Credentials) map[string]string {
 	}
 	var resultData = map[string]string{}
 
-	if err := json.Unmarshal(result, resultData); err != nil {
+	if err := json.Unmarshal(result, &resultData); err != nil {
 		log.Fatalf("failed: %v", err)
 	}
 
