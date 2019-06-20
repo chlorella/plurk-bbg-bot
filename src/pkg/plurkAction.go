@@ -37,12 +37,12 @@ func GetPlurkOauth() (*oauth.Credentials, error) {
 	return accessToken, nil
 }
 
-func GetProfile(accessToken *oauth.Credentials) map[string]string {
+func GetProfile(accessToken *oauth.Credentials) map[string]interface{} {
 	result, err := plurgo.CallAPI(accessToken, "/APP/Profile/getOwnProfile", map[string]string{})
 	if err != nil {
 		log.Fatalf("failed: %v", err)
 	}
-	var resultData = map[string]string{}
+	var resultData map[string]interface{}
 
 	if err := json.Unmarshal(result, &resultData); err != nil {
 		log.Fatalf("failed: %v", err)
@@ -52,8 +52,8 @@ func GetProfile(accessToken *oauth.Credentials) map[string]string {
 	return resultData
 }
 
-func AddAllAsFriend(accessToken *oauth.Credentials) map[string]string {
-	var resultData = map[string]string{}
+func AddAllAsFriend(accessToken *oauth.Credentials) map[string]interface{} {
+	var resultData map[string]interface{}
 	result, err := plurgo.CallAPI(accessToken, "/APP/Alerts/addAllAsFriends", map[string]string{})
 	if err != nil {
 		log.Fatalf("failed: %v", err)
